@@ -68,4 +68,17 @@ window.addEventListener('load', () => {
     const blob = new Blob([stringManifest], {type: 'application/json'});
     const manifestURL = URL.createObjectURL(blob);
     document.querySelector('#manifestPlaceholder').setAttribute('href', manifestURL);
+
+    // Add service worker code
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(`${baseUrl}sw.js`)
+            .then( registration => {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(err => {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    }
 });
